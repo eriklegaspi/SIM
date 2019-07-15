@@ -33,7 +33,7 @@ public class Main {
 		
 		
 		//write the call's information in the file
-		FileManager.Write(sim, file);
+		FileManager.write(sim, file);
 		//read the file
 		try {
 			FileManager.Read(file);

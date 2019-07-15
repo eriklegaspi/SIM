@@ -16,15 +16,20 @@ import it.sim.main.data.SIMCard;
 
 public class FileManager {
 
-	public static void Write(SIMCard sim, File file) {
-		
-		String sender = String.valueOf(sim.getNumber());
+	
+	/**
+	 * write into the file
+	 * @param sim 
+	 * @param file
+	 */
+	public static void write(SIMCard sim, File file) {
+		String sender = String.valueOf(sim.getNumber());	//parse into a String the sim's number
 		try {
 			FileWriter fw = new FileWriter(file, true);
-			HashMap<Integer, Call> register = sim.getRegister();
+			HashMap<Integer, Call> register = sim.getRegister();	//get the hashMap of the sim
 			for (Entry<Integer, Call> r : register.entrySet()) {
-				Call call = r.getValue();
-				String reciever = String.valueOf(call.getReciever());
+				Call call = r.getValue();	//get the call from the hashMap
+				String reciever = String.valueOf(call.getReciever());	//convert to string the number of the reciever
 				fw.write(r.getKey()+";"+sender+";"+reciever+";"+call.getEnd()+"\n");
 			}
 			fw.close();
@@ -33,6 +38,11 @@ public class FileManager {
 		}
 	}
 	
+	/**
+	 * read the file 
+	 * @param file
+	 * @throws IOException
+	 */
 	public static void Read(File file) throws IOException {
 		FileReader fr;
 		try {
@@ -41,7 +51,7 @@ public class FileManager {
 			String text = null;
 			
 			while((text = buffer.readLine()) != null) {
-				String[] split = text.split(";");
+				String[] split = text.split(";");		//split the line
 				System.out.println("ID Call:"+split[0]);
 				System.out.println("Sender"+split[1]);
 				System.out.println("Reciever:"+split[2]);
@@ -49,12 +59,18 @@ public class FileManager {
 			}
 			
 			buffer.close();
+			fr.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	
+	/**
+	 * get the last id of the call
+	 * @param file
+	 * @return the last id of the call
+	 * @throws IOException
+	 */
 	public static int getLastId(File file) throws IOException {
 		int id = 0;
 		FileReader fr;
